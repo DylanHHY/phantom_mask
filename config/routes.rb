@@ -20,9 +20,7 @@ Rails.application.routes.draw do
         end
       end
       
-      # 修改口罩名稱
-      # 修改口罩價錢
-      # 刪除口罩
+      # 修改口罩名稱、價錢，刪除口罩
       resources :masks do 
         collection do
           # 搜尋符合關鍵字的口罩
@@ -30,7 +28,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :transaction do
+      resources :transcation do
         # 找出指定日期範圍內，口罩交易量最高的x位用戶
         post :RankUserByMaskAmount
         # 指定日期範圍內，所有交易總額
@@ -38,7 +36,7 @@ Rails.application.routes.draw do
         # 指定日期範圍內，所有口罩交易量
         post :MaskAmountInDateRange
         # 全部交易量及總額
-        post :transaction
+        post :transcation
       end
     end
   end
