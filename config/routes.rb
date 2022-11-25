@@ -2,11 +2,14 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace :api do 
     namespace :v1 do 
+      # 修改藥局名稱
       resources :pharmacies do 
+        # 搜尋特定藥局所販售的口罩
+        get :getMasks
         collection do 
           # 星期及特定時間搜尋有營業的藥局
-          post :open_at_day
-          get :day_of_week
+          post :openAtDay
+          get :dayOfWeek
           
           # 透過關鍵字搜尋符合名稱的藥局
           get ':search/:q', action: 'pharmacies#search', as: 'search_pharmacies'
@@ -15,30 +18,16 @@ Rails.application.routes.draw do
           get :searchByPriceAndStock
 
         end
-
-        member do
-          # 搜尋特定藥局所販售的口罩
-          get :get_masks
-          # 修改藥局名稱
-          post :editName
-        end
       end
-
+      
+      # 修改口罩名稱
+      # 修改口罩價錢
+      # 刪除口罩
       resources :masks do 
         collection do
           # 搜尋符合關鍵字的口罩
           get 'search/:q', action: 'masks#search', as: 'search_masks'
         end
-
-        member do
-          # 修改口罩名稱
-          post :editName
-          # 修改口罩價錢
-          post :editPrice
-          # 刪除口罩
-          post :deleteMask
-        end
-
       end
 
       resources :transaction do

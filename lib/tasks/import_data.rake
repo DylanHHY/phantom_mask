@@ -4,12 +4,13 @@ namespace :import_data do
   task :pharmacy, [:file] => :environment do
      # Step 1. read importing JSON data
      pharmacies_list = JSON.parse(File.read('./data/pharmacies.json'))
-     puts pharmacies_list
+     puts pharmacies_list.count
   end
 
   desc "import users to datebase"
   task :user, [:file] => :environment do |task, args|
-    puts "users!!!"
+    users_list = JSON.parse(File.read('./data/users.json'))
+     puts users_list.count
   end
   
 end

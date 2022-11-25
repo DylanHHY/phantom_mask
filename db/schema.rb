@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_25_061135) do
+ActiveRecord::Schema.define(version: 2022_11_25_170020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,10 +24,19 @@ ActiveRecord::Schema.define(version: 2022_11_25_061135) do
     t.index ["pharmacy_id"], name: "index_masks_on_pharmacy_id"
   end
 
+  create_table "opening_hours", force: :cascade do |t|
+    t.string "day"
+    t.datetime "opening_at"
+    t.datetime "close_at"
+    t.bigint "pharmacy_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pharmacy_id"], name: "index_opening_hours_on_pharmacy_id"
+  end
+
   create_table "pharmacies", force: :cascade do |t|
     t.string "name"
     t.integer "cash_balance"
-    t.datetime "opening_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -53,6 +62,7 @@ ActiveRecord::Schema.define(version: 2022_11_25_061135) do
   end
 
   add_foreign_key "masks", "pharmacies"
+  add_foreign_key "opening_hours", "pharmacies"
   add_foreign_key "purchase_histories", "masks"
   add_foreign_key "purchase_histories", "pharmacies"
   add_foreign_key "purchase_histories", "users"
