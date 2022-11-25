@@ -5,8 +5,11 @@ Rails.application.routes.draw do
       resources :pharmacies do 
         collection do 
           get :open_at_day
+          get :day_of_week
+
         end
       end
     end
   end
+
 end
