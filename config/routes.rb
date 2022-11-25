@@ -9,7 +9,7 @@ Rails.application.routes.draw do
           get :day_of_week
           
           # 透過關鍵字搜尋符合名稱的藥局
-          get ':search/:q', :action => 'search', :as => 'search'
+          get ':search/:q', action: 'pharmacies#search', as: 'search_pharmacies'
           
           # 透過價錢區間找到的口罩，並找到符合條件的藥局
           get :searchByPriceAndStock
@@ -19,13 +19,37 @@ Rails.application.routes.draw do
         member do
           # 搜尋特定藥局所販售的口罩
           get :get_masks
+          # 修改藥局名稱
+          post :editName
         end
       end
 
       resources :masks do 
+        collection do
+          # 搜尋符合關鍵字的口罩
+          get 'search/:q', action: 'masks#search', as: 'search_masks'
+        end
+
+        member do
+          # 修改口罩名稱
+          post :editName
+          # 修改口罩價錢
+          post :editPrice
+          # 刪除口罩
+          post :deleteMask
+        end
+
       end
 
       resources :transaction do
+        # 找出指定日期範圍內，口罩交易量最高的x位用戶
+        post :RankUserByMaskAmount
+        # 指定日期範圍內，所有交易總額
+        post :TotalValueInDateRange
+        # 指定日期範圍內，所有口罩交易量
+        post :MaskAmountInDateRange
+        # 全部交易量及總額
+        post :transaction
       end
     end
   end
