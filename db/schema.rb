@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_26_104618) do
+ActiveRecord::Schema.define(version: 2022_11_26_183739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,36 +36,30 @@ ActiveRecord::Schema.define(version: 2022_11_26_104618) do
 
   create_table "pharmacies", force: :cascade do |t|
     t.string "name"
-    t.integer "cash_balance"
+    t.decimal "cash_balance", precision: 6, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "purchase_histories", force: :cascade do |t|
-    t.integer "transaction_amount"
+    t.decimal "transaction_amount", precision: 6, scale: 2
     t.datetime "transaction_date"
     t.bigint "user_id", null: false
-    t.bigint "pharmacy_id", null: false
-    t.bigint "mask_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "pharmacy_name"
     t.string "mask_name"
-    t.index ["mask_id"], name: "index_purchase_histories_on_mask_id"
-    t.index ["pharmacy_id"], name: "index_purchase_histories_on_pharmacy_id"
     t.index ["user_id"], name: "index_purchase_histories_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.integer "cash_balance"
+    t.decimal "cash_balance", precision: 6, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "masks", "pharmacies"
   add_foreign_key "opening_hours", "pharmacies"
-  add_foreign_key "purchase_histories", "masks"
-  add_foreign_key "purchase_histories", "pharmacies"
   add_foreign_key "purchase_histories", "users"
 end
