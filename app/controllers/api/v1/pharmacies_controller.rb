@@ -30,18 +30,21 @@ class Api::V1::PharmaciesController < ApplicationController
   end
   
   def update
+    if @pharmacy.update(pharmacy_params)
+      render json: @pharmacy, status:200
+    else
+      render json:{error: "update failed"}
+    end
   end
   
   def destroy
+    @pharmacy.destroy
   end
   
   def day_of_week
-
-  
   end
   
   def open_at_day
-    
   end
 
   private

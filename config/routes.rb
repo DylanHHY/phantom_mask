@@ -28,15 +28,14 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :transcation do
+      resources :trades, only: [index] do
         # 找出指定日期範圍內，口罩交易量最高的x位用戶
-        post :RankUserByMaskAmount
+        post :rank_user_by_mask_amount
         # 指定日期範圍內，所有交易總額
-        post :TotalValueInDateRange
+        post :total_value_in_date_range
         # 指定日期範圍內，所有口罩交易量
-        post :MaskAmountInDateRange
+        post :mask_amount_in_date_range
         # 全部交易量及總額
-        post :transcation
       end
     end
   end
